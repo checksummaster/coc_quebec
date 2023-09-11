@@ -17,6 +17,7 @@
     "braces": "^3.0.2",
     "caseless": "^0.12.0",
     "chokidar": "^3.5.3",
+    "clash-of-clans-api": "^0.6.4",
     "combined-stream": "^1.0.8",
     "core-util-is": "^1.0.2",
     "dashdash": "^1.14.1",
@@ -48,6 +49,7 @@
     "lodash": "^4.17.21",
     "mime-db": "^1.52.0",
     "mime-types": "^2.1.35",
+    "node-cron": "^3.0.2",
     "normalize-path": "^3.0.0",
     "oauth-sign": "^0.9.0",
     "performance-now": "^2.1.0",
@@ -71,7 +73,6 @@
     "uuid": "^3.4.0",
     "verror": "^1.10.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
