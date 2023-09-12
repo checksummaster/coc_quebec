@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-    <h1>Clash of Clan - Quebec Clan - Investisement de la Capital</h1>
+    <h1>Clash of Clan - Quebec Clan - Investisement de la Capital</h1><input type="number" id="findvalue" value = "23825"><button onclick="find()">find</button>
     <table>
         <thead>
             <tr>
@@ -33,6 +33,60 @@
     </table>
 
     <script>
+
+        async function find()
+        {
+            const targetSum = parseFloat(document.getElementById('findvalue').value);
+            const foundCombinations = [];
+            const data = await fetchAndSortJSONData();
+
+            // Function to find combinations of a given length
+            function findCombinations(arr, length) {
+                const combinations = [];
+                const f = function (prefix, arr) {
+                    for (let i = 0; i < arr.length; i++) {
+                        const newPrefix = prefix.concat(arr[i]);
+                        if (newPrefix.length === length) {
+                            combinations.push(newPrefix);
+                        } else {
+                            f(newPrefix, arr.slice(i + 1));
+                        }
+                    }
+                };
+                f([], arr);
+                return combinations;
+            }
+
+            // Filter data within a 3-day time window
+            const currentDate = new Date("2023-09-11T00:00:00.000Z");
+            const filteredData = data.filter(entry => {
+                const entryDate = new Date(entry.date);
+                const timeDiff = currentDate - entryDate;
+                return timeDiff <= 1 * 24 * 60 * 60 * 1000; // 1 days in milliseconds
+            });
+
+            // Generate all possible combinations of 2 and 3 entries
+            for (let combinationLength = 1; combinationLength <= 3; combinationLength++) {
+                const combinations = findCombinations(filteredData, combinationLength);
+                for (const combination of combinations) {
+                    const sum = combination.reduce((total, entry) => total + entry.value, 0);
+                    if (sum === targetSum) {
+                        foundCombinations.push(combination);
+                    }
+                }
+            }
+
+            // Print the found combinations
+            var out = ""
+            for (const combination of foundCombinations) {
+                out += "\nCombination:\n";
+                for (const entry of combination) {
+                    out += `Name: ${entry.name}, Value: ${entry.value} , Date: ${new Date(entry.date).toLocaleString()}\n`;
+                }
+                
+            }
+            alert(out)
+        }
         // Function to fetch and sort JSON data from the "log.json" file by date
         async function fetchAndSortJSONData() {
             try {

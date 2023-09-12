@@ -62,22 +62,19 @@ function publish()
     const { exec } = require('child_process');
 
     const task = cron.schedule('0 */4 * * *', () => {
-    const batchFilePath = 'update.bat';
+      const batchFilePath = 'update.bat';
 
 
-    exec(`cmd /c ${batchFilePath}`, (error, stdout, stderr) => {
-        if (error) {
-        console.error(`Error executing batch file: ${error}`);
-        return;
-        }
-        console.log(`Batch file executed successfully. Output:\n${stdout}`);
-    });
+      exec(`cmd /c ${batchFilePath}`, (error, stdout, stderr) => {
+          if (error) {
+          console.error(`Error executing batch file: ${error}`);
+          return;
+          }
+          console.log(`Batch file executed successfully. Output:\n${stdout}`);
+      });
     });
 
     task.start();
-
-
-
 }
 
 
@@ -109,11 +106,14 @@ async function main()
         {
             playerinfo = await client.playerByTag(i.tag)
 
-            var oldvalue = contrib[playerinfo.name] ? contrib[playerinfo.name] : 0;
-            var newvalue = playerinfo.clanCapitalContributions;
-            if (oldvalue != newvalue) {
-                console.log(playerinfo.name, newvalue - oldvalue);
-                log.push({name: playerinfo.name, value: newvalue - oldvalue, date: new Date()})
+            if (contrib[playerinfo.name] != undefined) { // new user
+
+                var oldvalue = contrib[playerinfo.name] ? contrib[playerinfo.name] : 0;
+                var newvalue = playerinfo.clanCapitalContributions;
+                if (oldvalue != newvalue) {
+                    console.log(playerinfo.name, newvalue - oldvalue);
+                    log.push({name: playerinfo.name, value: newvalue - oldvalue, date: new Date()})
+                }
             }
             
             contrib[playerinfo.name] = newvalue;
@@ -130,8 +130,9 @@ async function main()
         console.log(err)
         setTimeout(main, 1000 * 60);
     }
-    server();
-    publish();
+    
 }
 
+server();
+publish();
 main();
