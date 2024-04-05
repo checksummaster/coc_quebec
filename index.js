@@ -1,4 +1,4 @@
-const COC_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjMxYWQ5ZGRhLWMzZDgtNDA4NC05ZjdmLTBkY2RiZGViMzYzMCIsImlhdCI6MTY5NDA0NTUwMCwic3ViIjoiZGV2ZWxvcGVyLzNkMTczMTUyLTJhYWQtMjE1Zi03ODJhLWExM2IwNWZjZDE5NSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE3NC45MS4xOTIuMTA3Il0sInR5cGUiOiJjbGllbnQifV19.zTCcPQFxgrooBSHUVBhu5smZr6uzXCqZepfHfMNMM4CtQEJLWh2hdVr3AvNmrx5fYgAhCAYSUKUNIsm4S2wtMQ"
+const COC_API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjE4ODFmZTM3LTM2YTUtNGMwOC1iYTUzLTc0ZmI3ZWY4MDM2ZCIsImlhdCI6MTcxMjM1MDk3OCwic3ViIjoiZGV2ZWxvcGVyLzNkMTczMTUyLTJhYWQtMjE1Zi03ODJhLWExM2IwNWZjZDE5NSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjM0LjIxMS4yMDAuODUiXSwidHlwZSI6ImNsaWVudCJ9XX0.rL8aY0zlX0Jek1U-T27zfCNgqahvOVLcCRJcNVtl0RkplCv1sAfOG5NSfhbhDECgkrw2S6iYTvJbshE8cdI3nw"
 const http = require('http')
 const fs = require('fs');
 const path = require('path');
@@ -49,7 +49,7 @@ function server()
         });
       });
       
-      const port = 3000;
+      const port = 3001;
       server.listen(port, () => {
         console.log(`Server is running on http://localhost:${port}`);
       });
@@ -114,10 +114,8 @@ async function main()
                     console.log(playerinfo.name, newvalue - oldvalue);
                     log.push({name: playerinfo.name, value: newvalue - oldvalue, date: new Date()})
                 }
+                contrib[playerinfo.name] = newvalue;
             }
-            
-            contrib[playerinfo.name] = newvalue;
-            
         }
 
         fs.writeFileSync('contrib.json', JSON.stringify(contrib, null, 4));
@@ -134,5 +132,5 @@ async function main()
 }
 
 server();
-//publish();
+publish();
 main();
