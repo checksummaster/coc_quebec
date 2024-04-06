@@ -132,5 +132,5 @@ async function main()
 }
 
 server();
-publish();
+//publish();
 main();
